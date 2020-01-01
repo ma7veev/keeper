@@ -28,3 +28,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    form.type.categories:
+        class: App\Form\CategoriesType
+        arguments: ['@doctrine.orm.entity_manager']
+    form.type.operations:
+        class: App\Form\OperationsType
+        arguments: ['@doctrine.orm.entity_manager']

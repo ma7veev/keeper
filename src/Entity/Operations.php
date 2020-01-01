@@ -1,13 +1,24 @@
 <?php namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="operations")
  */
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\OperationsRepository")
+ */
 class Operations
 {
+    const TYPE_DEFAULT = 1;
+
+    const DIRECTION_INCOME = 1;
+    const DIRECTION_OUTCOME = 2;
+
+
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -103,4 +114,5 @@ class Operations
     public function setDescription($description){
         $this->description = $description;
     }
+
 }

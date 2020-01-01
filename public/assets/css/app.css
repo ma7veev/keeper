@@ -26,3 +26,16 @@ h1 {
     display: flex;
     justify-content: space-between;
 }
+.flash {
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 28px;
+    color: white;
+}
+.flash-success {
+    background-color: green;
+}
+.flash-error {
+    background-color: red;
+}

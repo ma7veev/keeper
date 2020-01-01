@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\EntityManager;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoriesRepository")
  */
 class Categories
 {
+    const STATUS_HIDDEN = 0;
+    const STATUS_VISIBLE = 1;
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

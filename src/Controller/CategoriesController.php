@@ -20,14 +20,11 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/categories/create", name="categories_create")
      */
     public function create(Request $request)
     {
-
         $categories = new Categories;
         $form = $this->createForm(CategoriesType::class, $categories);
         $form->handleRequest($request);
@@ -38,7 +35,15 @@ class CategoriesController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success', 'Success! Category created!'
+            );
+        } else {
+            $this->addFlash(
+                'error', 'Smth went wrong!'
+            );
         }
+
         return $this->render('categories/create.html.twig', [
             'form' => $form->createView(),
         ]);

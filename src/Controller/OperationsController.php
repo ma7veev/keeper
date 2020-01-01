@@ -35,7 +35,14 @@ class OperationsController extends AbstractController
              $entityManager = $this->getDoctrine()->getManager();
              $entityManager->persist($operation);
              $entityManager->flush();
+                $this->addFlash(
+                    'success', 'Success! Operation created!'
+                );
+        } else {
 
+            $this->addFlash(
+                'error', 'Smth went wrong!'
+            );
         }
         return $this->render('operations/create.html.twig', [
             'form' => $form->createView(),
