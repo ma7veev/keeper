@@ -47,4 +47,60 @@ class Operations
     {
         return $this->id;
     }
+
+    public function getAmount(){
+        return $this->amount;
+    }
+
+    public function getType(){
+        return $this->type;
+    }
+
+    public function getAccount(){
+        return $this->account;
+    }
+
+    public function getCategory(){
+        return $this->category;
+    }
+
+    public function getDirection(){
+        return $this->direction;
+    }
+
+    public function getCurrency(){
+        return $this->currency;
+    }
+
+    public function getDescription(){
+        return $this->description;
+    }
+
+    public function setAmount($amount){
+        $this->amount = $amount;
+    }
+
+    public function setType($type){
+        $this->type = $type;
+    }
+
+    public function setAccount($account){
+        $this->account = $account;
+    }
+
+    public function setCategory($category){
+        $this->category = $category;
+    }
+
+    public function setDirection($direction){
+        $this->direction = $direction;
+    }
+
+    public function setCurrency($currency){
+        $this->currency = $currency;
+    }
+
+    public function setDescription($description){
+        $this->description = $description;
+    }
 }
