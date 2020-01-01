@@ -2,10 +2,18 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="/assets/css/app.css">
+        <title>Welcome!</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+    <div class="menu">
+        <a href="{{ path('operations_create') }}">{{ 'Add operation' }}</a>
+        <a href="{{ path('operations') }}">{{ 'Operations list' }}</a>
+        <a href="{{ path('categories_create') }}">{{ 'Add category' }}</a>
+        <a href="{{ path('categories') }}">{{ 'Categories list' }}</a>
+    </div>
+        <h1>{% block title %}{% endblock %}</h1>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
