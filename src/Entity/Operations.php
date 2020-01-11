@@ -47,7 +47,7 @@ class Operations
 
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Accounts", mappedBy="operation")
+     * @ORM\OneToOne(targetEntity="Accounts", mappedBy="operation")
      */
     private $account;
 
