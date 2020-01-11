@@ -53,7 +53,7 @@ class Accounts
     /**
      * @ORM\Column(type="smallint")
      */
-    private $status;
+    private $status = self::STATUS_ACTIVE;
 
     /**
      * @ORM\Column(type="date")

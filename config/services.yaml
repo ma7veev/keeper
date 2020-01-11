@@ -47,3 +47,6 @@ services:
     form.type.operations:
         class: App\Form\OperationsType
         arguments: ['@doctrine.orm.entity_manager']
+    form.type.accounts:
+        class: App\Form\AccountsType
+        arguments: ['@doctrine.orm.entity_manager']

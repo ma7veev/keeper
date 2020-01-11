@@ -12,6 +12,8 @@
         <a href="{{ path('operations') }}">{{ 'Operations list' }}</a>
         <a href="{{ path('categories_create') }}">{{ 'Add category' }}</a>
         <a href="{{ path('categories') }}">{{ 'Categories list' }}</a>
+        <a href="{{ path('accounts_create') }}">{{ 'Create Account' }}</a>
+        <a href="{{ path('accounts') }}">{{ 'Accounts' }}</a>
     </div>
         <h1>{% block title %}{% endblock %}</h1>
     {% for message in app.flashes('success') %}
