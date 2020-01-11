@@ -26,6 +26,19 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\EventListener\Balance:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - # these are the basic options that define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'postPersist'
+                entity: 'App\Entity\Operations'
+
+                # set the 'lazy' option to TRUE to only instantiate listeners when they are used
+                lazy: true
+
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     form.type.categories:

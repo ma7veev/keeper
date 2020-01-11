@@ -26,7 +26,7 @@ class OperationsType extends AbstractType
     {
         $categories_rep = $this->em->getRepository('App\Entity\Categories');
         $operations_rep = $this->em->getRepository('App\Entity\Operations');
-        $categories_list = $categories_rep->getCategoriesList();
+        $accounts_rep = $this->em->getRepository('App\Entity\Accounts');
 
         $builder
             ->add('amount', IntegerType::class)
@@ -34,19 +34,14 @@ class OperationsType extends AbstractType
                 'choices' => [
                     'Default' => Operations::TYPE_DEFAULT,
                 ] ])
-            ->add('account', ChoiceType::class, [
-                'choices' => [
-                    'Main' => 1,
-                ] ])
-            ->add('category', ChoiceType::class, [
-                'choices' => $categories_list ])
+            ->add('account_id', ChoiceType::class, [
+                'choices' => $accounts_rep-> getAccountsList() ])
+            ->add('category_id', ChoiceType::class, [
+                'choices' => $categories_rep->getCategoriesList() ])
             ->add('direction',ChoiceType::class, [
                 'choices' => $operations_rep->getDirectionsList() ])
             ->add('currency', ChoiceType::class, [
-                'choices' => [
-                    'UAH' => 'UAH',
-                    'USD' => 'USD',
-                ] ])
+                'choices' => $accounts_rep-> getCurrenciesList() ])
             ->add('description', TextType::class)
             ->add('save', SubmitType::class)
         ;

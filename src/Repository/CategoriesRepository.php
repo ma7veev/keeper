@@ -64,7 +64,6 @@ class CategoriesRepository extends ServiceEntityRepository
         foreach ($parents as $item) {
             $parents_list[ $item[ 'name' ] ] = $item[ 'id' ];
         }
-        $parents_list = [ null => 0 ] + $parents_list;
 
         return $parents_list;
     }

@@ -17,7 +17,11 @@ class Operations
     const DIRECTION_INCOME = 1;
     const DIRECTION_OUTCOME = 2;
 
-
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime);
+    }
 
     /**
      * @ORM\Column(type="integer")
@@ -36,11 +40,18 @@ class Operations
     /**
      * @ORM\Column(type="integer")
      */
-    private $account;
+    private $account_id;
     /**
      * @ORM\Column(type="integer")
      */
-    private $category;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Accounts", mappedBy="operation")
+     */
+    private $account;
+
+    private $category_id;
     /**
      * @ORM\Column(type="integer")
      */
@@ -53,6 +64,20 @@ class Operations
      * @ORM\Column(type="text")
      */
     private $description;
+
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $updated_at;
+
+
+
 
     public function getId()
     {
@@ -67,12 +92,16 @@ class Operations
         return $this->type;
     }
 
-    public function getAccount(){
+    public function getAccountId(){
+        return $this->account_id;
+    }
+    public function getAccount(): ?Accounts
+    {
         return $this->account;
     }
 
-    public function getCategory(){
-        return $this->category;
+    public function getCategoryId(){
+        return $this->category_id;
     }
 
     public function getDirection(){
@@ -95,12 +124,12 @@ class Operations
         $this->type = $type;
     }
 
-    public function setAccount($account){
-        $this->account = $account;
+    public function setAccountId($account){
+        $this->account_id = $account;
     }
 
-    public function setCategory($category){
-        $this->category = $category;
+    public function setCategoryId($category){
+        $this->category_id = $category;
     }
 
     public function setDirection($direction){
@@ -113,6 +142,30 @@ class Operations
 
     public function setDescription($description){
         $this->description = $description;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 
 }

@@ -39,9 +39,9 @@ class CategoriesController extends AbstractController
                 'success', 'Success! Category created!'
             );
         } else {
-            $this->addFlash(
+         /*   $this->addFlash(
                 'error', 'Smth went wrong!'
-            );
+            );*/
         }
 
         return $this->render('categories/create.html.twig', [

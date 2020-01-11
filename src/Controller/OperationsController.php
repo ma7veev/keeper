@@ -22,7 +22,7 @@ class OperationsController extends AbstractController
     }
 
     /**
-     * @Route("/operations/create", name="operations_create")
+     * @Route("/", name="operations_create")
      */
     public function create(Request $request)
     {
@@ -40,9 +40,9 @@ class OperationsController extends AbstractController
                 );
         } else {
 
-            $this->addFlash(
+         /*   $this->addFlash(
                 'error', 'Smth went wrong!'
-            );
+            );*/
         }
         return $this->render('operations/create.html.twig', [
             'form' => $form->createView(),
