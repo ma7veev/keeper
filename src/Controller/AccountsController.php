@@ -39,6 +39,7 @@ class AccountsController extends AbstractController
             $this->addFlash(
                 'success', 'Success! Account created!'
             );
+            return $this->redirectToRoute('accounts_create');
         } else {
             /*   $this->addFlash(
                    'error', 'Smth went wrong!'

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
+use phpDocumentor\Reflection\Types\Self_;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoriesRepository")
  */
@@ -12,7 +14,8 @@ class Categories
     const STATUS_HIDDEN = 0;
     const STATUS_VISIBLE = 1;
 
-
+    const TYPE_OUTCOME = 1;
+    const TYPE_INCOME = 2;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,19 +29,24 @@ class Categories
     private $parent;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $status;
+    private $type;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status = self::STATUS_VISIBLE ;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $sort;
+    private $sort=9999;
 
     public function getId(): ?int
     {
@@ -69,6 +77,18 @@ class Categories
         return $this;
     }
 
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     public function getStatus(): ?int
     {
         return $this->status;
@@ -91,5 +111,15 @@ class Categories
         $this->sort = $sort;
 
         return $this;
+    }
+
+    public static function makeList($arr = [])
+    {
+        $list = [];
+        foreach ($arr as $item) {
+            $list[ $item[ 'name' ] ] = $item[ 'id' ];
+        }
+
+        return $list;
     }
 }

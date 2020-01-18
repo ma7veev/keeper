@@ -48,7 +48,7 @@ class CategoriesRepository extends ServiceEntityRepository
     }
     */
 
-    public function getCategoriesArr(){
+    public function getCategoriesAll(){
         return $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.status = :s')
@@ -58,13 +58,38 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
-    public function getCategoriesList(){
-        $parents = $this->getCategoriesArr();
-        $parents_list = [];
-        foreach ($parents as $item) {
-            $parents_list[ $item[ 'name' ] ] = $item[ 'id' ];
-        }
+    public function getCategoriesParent(){
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere('c.status = :s')
+            ->andWhere('c.parent = 0')
+            ->setParameter('s', Categories::STATUS_VISIBLE)
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
 
-        return $parents_list;
+    public function getCategoriesIncome(){
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere('c.status = :s')
+            ->andWhere('c.parent != 0')
+            ->andWhere('c.type = '.Categories::TYPE_INCOME)
+            ->setParameter('s', Categories::STATUS_VISIBLE)
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function getCategoriesOutcome(){
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->andWhere('c.status = :s')
+            ->andWhere('c.parent != 0')
+            ->andWhere('c.type = '.Categories::TYPE_OUTCOME)
+            ->setParameter('s', Categories::STATUS_VISIBLE)
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
     }
 }

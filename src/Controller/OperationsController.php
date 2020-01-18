@@ -38,6 +38,7 @@ class OperationsController extends AbstractController
                 $this->addFlash(
                     'success', 'Success! Operation created!'
                 );
+            return $this->redirectToRoute('operations_create');
         } else {
 
          /*   $this->addFlash(
