@@ -24,8 +24,8 @@ final class Version20200118090130 extends AbstractMigration
 
         $this->addSql('ALTER TABLE categories RENAME COLUMN parent TO parent_id');
         $this->addSql('ALTER TABLE categories ADD CONSTRAINT FK_3AF34668727ACA70 FOREIGN KEY (parent_id) REFERENCES categories (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-       $this->addSql('CREATE UNIQUE INDEX UNIQ_3AF346685E237E06 ON categories (name)');
-        $this->addSql('CREATE INDEX IDX_3AF34668727ACA70 ON categories (parent_id)');
+       $this->addSql('CREATE UNIQUE INDEX UNIQ_3AF346685E237E07 ON categories (name)');
+        $this->addSql('CREATE INDEX IDX_3AF34668727ACA71 ON categories (parent_id)');
     }
 
     public function down(Schema $schema) : void
@@ -35,8 +35,8 @@ final class Version20200118090130 extends AbstractMigration
 
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE categories DROP CONSTRAINT FK_3AF34668727ACA70');
-        $this->addSql('DROP INDEX UNIQ_3AF346685E237E06');
-        $this->addSql('DROP INDEX IDX_3AF34668727ACA70');
+        $this->addSql('DROP INDEX UNIQ_3AF346685E237E07');
+        $this->addSql('DROP INDEX IDX_3AF34668727ACA71');
         $this->addSql('ALTER TABLE categories RENAME COLUMN parent_id TO parent');
     }
 }
