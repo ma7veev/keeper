@@ -22,10 +22,10 @@ class CategoriesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categories_rep = $this->em->getRepository('App\Entity\Categories');
-        $categories_parent_list = [null=>0] + Categories::makeList($categories_rep->getCategoriesParent());
+        $categories_parent_list = [null=>null] + Categories::makeList($categories_rep->getCategoriesParent(true));
 
         $builder
-            ->add('parent', ChoiceType::class, [
+            ->add('parent_id', ChoiceType::class, [
                 'choices' => $categories_parent_list  ])
             ->add('name', TextType::class)
             ->add('status', ChoiceType::class, [

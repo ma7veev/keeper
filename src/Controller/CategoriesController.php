@@ -15,10 +15,20 @@ class CategoriesController extends AbstractController
      */
     public function index()
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $categories_rep = $entityManager->getRepository('App\Entity\Categories');
+        $categories_income = $categories_rep->getCategoriesIncome();
+        $categories_outcome = $categories_rep->getCategoriesOutcome();
+        $categories_parents =$categories_rep->getCategoriesParentsList();
+
         return $this->render('categories/index.html.twig', [
             'controller_name' => 'CategoriesController',
+            'categories_income' => $categories_income,
+            'categories_outcome' => $categories_outcome,
+            'categories_parents' => $categories_parents,
         ]);
     }
+
 
     /**
      * @Route("/categories/create", name="categories_create")
@@ -30,11 +40,14 @@ class CategoriesController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
-
             $entityManager = $this->getDoctrine()->getManager();
+            if(!empty($category->parent_id)){
+
+                $categories_rep = $entityManager->getRepository('App\Entity\Categories');
+                $category->setParent($categories_rep->find($category->parent_id));
+            }
             $entityManager->persist($category);
             $entityManager->flush();
-
             $this->addFlash(
                 'success', 'Success! Category created!'
             );

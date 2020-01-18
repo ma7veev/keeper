@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
 use phpDocumentor\Reflection\Types\Self_;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoriesRepository")
  */
@@ -16,6 +17,14 @@ class Categories
 
     const TYPE_OUTCOME = 1;
     const TYPE_INCOME = 2;
+
+
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,7 +35,18 @@ class Categories
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
+    private $parent_id;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="products")
+     */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Categories", mappedBy="parent")
+     */
+    private $children;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -53,16 +73,38 @@ class Categories
         return $this->id;
     }
 
-    public function getParent(): ?int
+    public function getParentId(): ?int
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentId(?int $parent_id): self
+    {
+
+        $this->parent_id = $parent_id;
+
+        return $this;
+    }
+
+    public function getParent(): ?Categories
     {
         return $this->parent;
     }
 
-    public function setParent(int $parent): self
+    public function setParent(?Categories $parent): self
     {
         $this->parent = $parent;
 
         return $this;
+    }
+
+
+    /**
+     * @return Collection|Categories[]
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
     }
 
     public function getName(): ?string

@@ -58,22 +58,25 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
-    public function getCategoriesParent(){
-        return $this->createQueryBuilder('c')
+    public function getCategoriesParent($as_array = false){
+        $query = $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.status = :s')
-            ->andWhere('c.parent = 0')
+            ->andWhere('c.parent IS NULL')
             ->setParameter('s', Categories::STATUS_VISIBLE)
             ->orderBy('c.name', 'ASC')
-            ->getQuery()
-            ->getArrayResult();
+            ->getQuery();
+        if ($as_array){
+            return $query->getArrayResult();
+        }
+        return $query->getResult();
     }
 
     public function getCategoriesIncome(){
         return $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.status = :s')
-            ->andWhere('c.parent != 0')
+            ->andWhere('c.parent_id IS NOT NULL')
             ->andWhere('c.type = '.Categories::TYPE_INCOME)
             ->setParameter('s', Categories::STATUS_VISIBLE)
             ->orderBy('c.name', 'ASC')
@@ -85,11 +88,24 @@ class CategoriesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.status = :s')
-            ->andWhere('c.parent != 0')
+            ->andWhere('c.parent_id IS NOT NULL')
             ->andWhere('c.type = '.Categories::TYPE_OUTCOME)
             ->setParameter('s', Categories::STATUS_VISIBLE)
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getArrayResult();
+    }
+
+    public function getCategoriesParentsList(){
+        $parents = $this->getCategoriesParent();
+        $list = [];
+        foreach ($parents as $parent){
+            $list[$parent->getName()] = [];
+            foreach($parent->getChildren() as $child){
+                $list[$parent->getName()][] = $child->getName();
+            }
+        }
+
+        return $list;
     }
 }
