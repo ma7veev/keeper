@@ -48,6 +48,29 @@ class OperationsRepository extends ServiceEntityRepository
     }
     */
 
+    public function getOperations(){
+        return $this->createQueryBuilder('o')
+            ->select('o')
+            ->orderBy('o.created_at', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function getOperationsList(){
+        $operations = $this->getOperations();
+        $list = [];
+        foreach ($operations as $operation){
+            $item = $operation;
+            $item['direction_name']='';
+            if (isset(array_flip(self::getDirectionsList())[$operation['direction']])){
+                $item['direction_name']=array_flip(self::getDirectionsList())[$operation['direction']];
+            }
+            $list[]=$item;
+
+        }
+        return $list;
+
+    }
     public function getDirectionsList(){
         return [
             'Income'=>Operations::DIRECTION_INCOME,

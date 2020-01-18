@@ -155,6 +155,7 @@ class Categories
         return $this;
     }
 
+
     public static function makeList($arr = [])
     {
         $list = [];

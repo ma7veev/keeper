@@ -4,15 +4,11 @@
 {% endblock %}
 {% block body %}
     {% for  parent_name, parent in categories_parents %}
-       <strong> {{ parent_name }} </strong><br>
+       <strong> {{ parent_name }} </strong> - {{ parent.type }} <br>
         <ul>
-        {% for child_name in parent %}
+        {% for child_name in parent.children %}
             <li>{{ child_name }}</li>
         {% endfor %}
         </ul>
-    {% endfor %}
-    <br>
-    {% for category in categories_outcome %}
-
     {% endfor %}
 {% endblock %}

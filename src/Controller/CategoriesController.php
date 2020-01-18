@@ -17,14 +17,10 @@ class CategoriesController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $categories_rep = $entityManager->getRepository('App\Entity\Categories');
-        $categories_income = $categories_rep->getCategoriesIncome();
-        $categories_outcome = $categories_rep->getCategoriesOutcome();
         $categories_parents =$categories_rep->getCategoriesParentsList();
 
         return $this->render('categories/index.html.twig', [
             'controller_name' => 'CategoriesController',
-            'categories_income' => $categories_income,
-            'categories_outcome' => $categories_outcome,
             'categories_parents' => $categories_parents,
         ]);
     }

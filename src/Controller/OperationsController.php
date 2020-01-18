@@ -16,8 +16,12 @@ class OperationsController extends AbstractController
      */
     public function index()
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $operations_rep = $entityManager->getRepository('App\Entity\Operations');
+        $operations_list = $operations_rep->getOperationsList();
         return $this->render('operations/index.html.twig', [
             'controller_name' => 'OperationsController',
+            'operations_list'=>$operations_list,
         ]);
     }
 

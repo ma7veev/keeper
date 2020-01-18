@@ -64,7 +64,8 @@ class CategoriesRepository extends ServiceEntityRepository
             ->andWhere('c.status = :s')
             ->andWhere('c.parent IS NULL')
             ->setParameter('s', Categories::STATUS_VISIBLE)
-            ->orderBy('c.name', 'ASC')
+            ->orderBy('c.sort', 'ASC')
+            ->orderBy('c.type', 'ASC')
             ->getQuery();
         if ($as_array){
             return $query->getArrayResult();
@@ -101,11 +102,21 @@ class CategoriesRepository extends ServiceEntityRepository
         $list = [];
         foreach ($parents as $parent){
             $list[$parent->getName()] = [];
+            $list[$parent->getName()]['type'] = '';
+            if (isset(self::getTypesList()[$parent->getType()])){
+                $list[$parent->getName()]['type'] = self::getTypesList()[$parent->getType()];
+            }
+            $list[$parent->getName()]['children'] = [];
             foreach($parent->getChildren() as $child){
-                $list[$parent->getName()][] = $child->getName();
+                $list[$parent->getName()]['children'][] = $child->getName();
             }
         }
 
         return $list;
+    }
+
+    public static function getTypesList()
+    {
+        return [ Categories::TYPE_INCOME => 'Income', Categories::TYPE_OUTCOME => 'Outcome' ];
     }
 }
