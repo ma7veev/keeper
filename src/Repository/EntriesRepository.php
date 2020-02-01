@@ -47,4 +47,13 @@ class EntriesRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function getAllList(){
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->orderBy('c.created_at', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

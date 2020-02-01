@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Operations;
+use App\Entity\Entries;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -48,7 +49,8 @@ class OperationsRepository extends ServiceEntityRepository
     }
     */
 
-    public function getOperations(){
+    public function getOperations()
+    {
         return $this->createQueryBuilder('o')
             ->select('o')
             ->orderBy('o.created_at', 'DESC')
@@ -56,25 +58,38 @@ class OperationsRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
-    public function getOperationsList(){
-        $operations = $this->getOperations();
-        $list = [];
-        foreach ($operations as $operation){
-            $item = $operation;
-            $item['direction_name']='';
-            if (isset(array_flip(self::getDirectionsList())[$operation['direction']])){
-                $item['direction_name']=array_flip(self::getDirectionsList())[$operation['direction']];
-            }
-            $list[]=$item;
+    public function getWithEntries()
+    {
+        $conn = $this->getEntityManager()
+            ->getConnection();
+        $sql = 'SELECT operations.*, entries.amount_before, entries.amount_after FROM operations LEFT JOIN entries AS entries ON entries.operation_id = operations.id ORDER BY entries.created_at DESC';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
 
-        }
-        return $list;
-
+        return $stmt->fetchAll();
     }
-    public function getDirectionsList(){
+
+    public function getOperationsList()
+    {
+        $operations = $this->getWithEntries();
+        $list = [];
+        foreach ($operations as $operation) {
+            $item = $operation;
+            $item[ 'direction_name' ] = '';
+            if (isset(array_flip(self::getDirectionsList())[ $operation[ 'direction' ] ])) {
+                $item[ 'direction_name' ] = array_flip(self::getDirectionsList())[ $operation[ 'direction' ] ];
+            }
+            $list[] = $item;
+        }
+
+        return $list;
+    }
+
+    public function getDirectionsList()
+    {
         return [
-            'Income'=>Operations::DIRECTION_INCOME,
-            'Outcome'=>Operations::DIRECTION_OUTCOME
+            'Income'  => Operations::DIRECTION_INCOME,
+            'Outcome' => Operations::DIRECTION_OUTCOME,
         ];
     }
 }

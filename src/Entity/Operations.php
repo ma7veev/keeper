@@ -51,6 +51,11 @@ class Operations
      */
     private $account;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Entries", mappedBy="operation")
+     */
+    private $entry;
+
     private $category_id;
     /**
      * @ORM\Column(type="integer")
@@ -98,6 +103,10 @@ class Operations
     public function getAccount(): ?Accounts
     {
         return $this->account;
+    }
+    public function getEntry(): ?Entries
+    {
+        return $this->entry;
     }
 
     public function getCategoryId(){

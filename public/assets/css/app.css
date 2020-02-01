@@ -46,6 +46,8 @@ table.blueTable {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
 }
 table.blueTable td, table.blueTable th {
     border: 1px solid #AAAAAA;

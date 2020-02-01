@@ -40,6 +40,13 @@ class Entries
      */
     private $operation_id;
 
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="Operations", mappedBy="entry")
+     */
+    private $operation;
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -94,6 +101,11 @@ class Entries
     public function getOperationId(): ?int
     {
         return $this->operation_id;
+    }
+
+    public function getOperation(): ?Operations
+    {
+        return $this->operation;
     }
 
     public function setOperationId(int $operation_id): self

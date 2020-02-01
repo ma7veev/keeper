@@ -66,6 +66,10 @@ class Accounts
     private $updated_at;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Operations", mappedBy="account")
+     */
+    private $operations;
 
     public function getId(): ?int
     {
