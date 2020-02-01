@@ -14,8 +14,8 @@ class Operations
 {
     const TYPE_DEFAULT = 1;
 
-    const DIRECTION_INCOME = 1;
-    const DIRECTION_OUTCOME = 2;
+    const DIRECTION_OUTCOME = 1;
+    const DIRECTION_INCOME = 2;
 
     public function __construct()
     {

@@ -41,10 +41,10 @@ class OperationsType extends AbstractType
                 'choices' => $accounts_rep-> getAccountsList() ])
             ->add('category_id', ChoiceType::class, [
                 'choices' => $categories_list])
-            ->add('direction',ChoiceType::class, [
-                'choices' => $operations_rep->getDirectionsList() ])
-            ->add('currency', ChoiceType::class, [
-                'choices' => $accounts_rep-> getCurrenciesList() ])
+         /*   ->add('direction',ChoiceType::class, [
+                'choices' => $operations_rep->getDirectionsList() ])*/
+           /* ->add('currency', ChoiceType::class, [
+                'choices' => $accounts_rep-> getCurrenciesList() ])*/
             ->add('description', TextType::class)
             ->add('save', SubmitType::class)
         ;

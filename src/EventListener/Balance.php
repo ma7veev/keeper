@@ -17,6 +17,16 @@ class Balance
         $this->em = $em;
     }
 
+    public function prePersist(Operations $operation)
+    {
+        $accounts_rep = $this->em->getRepository('App\Entity\Accounts');
+        $categories_rep = $this->em->getRepository('App\Entity\Categories');
+        $account = $accounts_rep->find($operation->getAccountId());
+        $category = $categories_rep->find($operation->getCategoryId());
+        $operation->setCurrency($account->getCurrency());
+        $operation->setDirection($category->getType());
+    }
+
     public function postPersist(Operations $operation)
     {
         $entry = new  Entries;
@@ -24,6 +34,7 @@ class Balance
 
         $accounts_rep = $this->em->getRepository('App\Entity\Accounts');
         $account = $accounts_rep->find($operation->getAccountId());
+
         $entry->setAmountBefore($account->getAmount());
         $direction = $operation->getDirection();
         $amount_after = 0;

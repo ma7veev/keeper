@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 class CategoriesType extends AbstractType
 {
     protected $em;
@@ -46,6 +48,9 @@ class CategoriesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Categories::class,
+            'constraints' => [
+                new UniqueEntity(['fields' => ['name']])
+            ],
         ]);
     }
 }

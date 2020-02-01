@@ -37,10 +37,9 @@ class CategoriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            if(!empty($category->parent_id)){
-
+            if(!empty($category->getParentId())){
                 $categories_rep = $entityManager->getRepository('App\Entity\Categories');
-                $category->setParent($categories_rep->find($category->parent_id));
+                $category->setParent($categories_rep->find($category->getParentId()));
             }
             $entityManager->persist($category);
             $entityManager->flush();

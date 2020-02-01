@@ -58,11 +58,11 @@ class OperationsRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
-    public function getWithEntries()
+    public function getWithRels()
     {
         $conn = $this->getEntityManager()
             ->getConnection();
-        $sql = 'SELECT operations.*, entries.amount_before, entries.amount_after FROM operations LEFT JOIN entries AS entries ON entries.operation_id = operations.id ORDER BY entries.created_at DESC';
+        $sql = 'SELECT operations.*, entries.amount_before, entries.amount_after, accounts.name AS account_name FROM operations LEFT JOIN entries ON entries.operation_id = operations.id  LEFT JOIN accounts ON accounts.id = operations.account_id ORDER BY operations.created_at DESC';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -71,7 +71,7 @@ class OperationsRepository extends ServiceEntityRepository
 
     public function getOperationsList()
     {
-        $operations = $this->getWithEntries();
+        $operations = $this->getWithRels();
         $list = [];
         foreach ($operations as $operation) {
             $item = $operation;
